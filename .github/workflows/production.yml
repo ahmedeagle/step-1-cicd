@@ -1,0 +1,29 @@
+name: multi-job-demo
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build step
+        run: echo "🛠 Building the app..."
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: echo "✅ Running tests..."
+
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy step
+        run: echo "🚀 Deploying the app..."
